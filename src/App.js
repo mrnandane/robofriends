@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { CardList } from './cardlist/CardList';
+import { Searchbox } from './searchbox/Searchbox';
+import {robots} from './robots';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      robots: robots,
+      searchString: ''
+    }
+  }
+  onSearchKeyChange = (event) => {
+    this.setState({
+      searchString: event.target.value
+    });
+  }
+
   render() {
+    const filteredRobots = this.state.robots.filter((robot) => {
+      return robot.name.toLowerCase().includes(this.state.searchString);
+    })
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className={'tc gradient'}>
+        <h1 className={'f1'}>Robots</h1>
+        <Searchbox searchChange={this.onSearchKeyChange}/>
+        <CardList robots={filteredRobots}/>
       </div>
     );
   }
-}
+};
 
 export default App;
