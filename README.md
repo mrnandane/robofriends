@@ -2442,3 +2442,16 @@ In the future, we might start automatically compiling incompatible third-party m
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+
+
+Including fonts in project: 
+https://www.cufonfonts.com/font/robotaur
+ - download
+- copy woff files in src folder 
+- copy font-face and use in css
+
+To create gradient background
+https://cssgradient.io/
+
+API To get diffent images with change of parameters:
+https://robohash.org/ 
