@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { CardList } from './cardlist/CardList';
-import { Searchbox } from './searchbox/Searchbox';
-import { Scroll } from './scroll/Scroll';
+import { CardList } from '../components/cardlist/CardList';
+import { Searchbox } from '../components/searchbox/Searchbox';
+import { Scroll } from '../components/scroll/Scroll';
 import './App.css';
 
 class App extends Component {
@@ -26,14 +26,12 @@ class App extends Component {
   }
 
   render() {
-    const filteredRobots = this.state.robots.filter((robot) => {
-      return robot.name.toLowerCase().includes(this.state.searchString);
-    })
-    if (this.state.robots.length < 1) {
-      return <h1>Loading..</h1>
-    }
-    else {
-      return (
+    const { robots, searchString } = this.state;
+    const filteredRobots = robots.filter((robot) => {
+      return robot.name.toLowerCase().includes(searchString);
+    });
+    return !robots.length ? <h1>Loading..</h1> :
+      (
         <div className={'tc gradient'}>
           <h1 className={'f1'}>Robots</h1>
           <Searchbox searchChange={this.onSearchKeyChange}/>
@@ -43,7 +41,6 @@ class App extends Component {
         </div>
       );
     }
-  }
 };
 
 export default App;

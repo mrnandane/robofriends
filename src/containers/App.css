@@ -2,7 +2,7 @@
     font-family: 'Robotaur 3D';
     font-style: normal;
     font-weight: normal;
-    src: local('Robotaur 3D'), url('assets/fonts/robotaur3d.woff') format('woff');
+    src: local('Robotaur 3D'), url('../assets/fonts/robotaur3d.woff') format('woff');
 }
 
 body {
