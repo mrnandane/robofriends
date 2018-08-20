@@ -3,6 +3,7 @@ import { CardList } from './cardlist/CardList';
 import { Searchbox } from './searchbox/Searchbox';
 import { Scroll } from './scroll/Scroll';
 import './App.css';
+import ErrorBoundary from './ErrorBoundary';
 
 class App extends Component {
   constructor() {
@@ -28,7 +29,13 @@ class App extends Component {
   render() {
     const filteredRobots = this.state.robots.filter((robot) => {
       return robot.name.toLowerCase().includes(this.state.searchString);
-    })
+    });
+    /* NOTE : to test our error boundary we need to throw a error manually..
+     only in development mode it will appear as error but on production mode,
+     it will just render whatever is returned from render function in case of error */
+    if (filteredRobots.length === 5) {
+      throw new Error('I am crashed..');
+    }
     if (this.state.robots.length < 1) {
       return <h1>Loading..</h1>
     }
@@ -37,9 +44,11 @@ class App extends Component {
         <div className={'tc gradient'}>
           <h1 className={'f1'}>Robots</h1>
           <Searchbox searchChange={this.onSearchKeyChange}/>
-          <Scroll>
-            <CardList robots={filteredRobots}/>
-          </Scroll>
+          <ErrorBoundary>
+            <Scroll>
+              <CardList robots={filteredRobots}/>
+            </Scroll>
+          </ErrorBoundary>
         </div>
       );
     }
