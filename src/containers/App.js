@@ -4,21 +4,29 @@ import { Searchbox } from '../components/searchbox/Searchbox';
 import { Scroll } from '../components/scroll/Scroll';
 import './App.css';
 import ErrorBoundary from '../ErrorBoundary';
+import { connect } from 'react-redux';
+import {updateSearchField} from '../actions';
+
+const mapStateToProps = (state) => {
+  return {
+    searchString: state.searchString
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onSearchKeyChange: (event) => {
+        return dispatch(updateSearchField(event.target.value))
+      }
+    }
+};
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      robots: [],
-      searchString: ''
+      robots: []
     }
-  }
-
-  // to hold reference of this we will use ES6 syntax here for function
-  onSearchKeyChange = (event) => {
-    this.setState({
-      searchString: event.target.value
-    });
   }
 
   componentDidMount() {
@@ -27,7 +35,8 @@ class App extends Component {
   }
 
   render() {
-    const { robots, searchString } = this.state;
+    const { robots } = this.state;
+    const { searchString, onSearchKeyChange } = this.props;
     const filteredRobots = robots.filter((robot) => {
       return robot.name.toLowerCase().includes(searchString);
     });
@@ -41,7 +50,7 @@ class App extends Component {
       (
         <div className={'tc gradient'}>
           <h1 className={'f1'}>Robots</h1>
-          <Searchbox searchChange={this.onSearchKeyChange}/>
+          <Searchbox searchChange={onSearchKeyChange}/>
           <ErrorBoundary>
             <Scroll>
               <CardList robots={filteredRobots}/>
@@ -52,4 +61,4 @@ class App extends Component {
   }
 };
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
